@@ -2,9 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using Cake.Commands;
 using Cake.Tests.Fixtures;
 using NSubstitute;
+using NSubstitute.ExceptionExtensions;
 using Xunit;
 
 namespace Cake.Tests.Unit
@@ -42,6 +44,23 @@ namespace Cake.Tests.Unit
 
                 // Then
                 AssertEx.IsArgumentNullException(result, "options");
+            }
+
+            [Fact]
+            public void Should_Throw_If_Command_Throws()
+            {
+                // Given
+                var innerCommandError = new Exception("Inner command error");
+                var fixture = new CakeApplicationFixture();
+                var command = Substitute.For<ICommand>();
+                command.Execute(fixture.Options).Throws(innerCommandError);
+                fixture.CommandFactory.CreateBuildCommand().Returns(command);
+
+                // When
+                Exception actualError = Record.Exception(() => fixture.RunApplication());
+
+                // Then
+                Assert.Equal(innerCommandError, actualError);
             }
 
             [Fact]

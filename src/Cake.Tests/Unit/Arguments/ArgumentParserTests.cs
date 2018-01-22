@@ -26,7 +26,7 @@ namespace Cake.Tests.Unit.Arguments
                 var parser = new ArgumentParser(fixture.Log, fixture.VerbosityParser);
 
                 // When
-                var result = Record.Exception(() => parser.Parse(null));
+                Exception result = Record.Exception(() => parser.Parse(null));
 
                 // Then
                 AssertEx.IsArgumentNullException(result, "args");
@@ -40,7 +40,7 @@ namespace Cake.Tests.Unit.Arguments
                 var parser = new ArgumentParser(fixture.Log, fixture.VerbosityParser);
 
                 // When
-                var result = parser.Parse(new string[] { });
+                CakeOptions result = parser.Parse(new string[] { });
 
                 // Then
                 Assert.NotNull(result);
@@ -61,6 +61,26 @@ namespace Cake.Tests.Unit.Arguments
                 Assert.Equal("More than one build script specified.", fixture.Log.Entries[0].Message);
             }
 
+            [Fact]
+            public void Should_Return_Default_Options_If_Multiple_Build_Configurations_Are_Provided()
+            {
+                // Given
+                var fixture = new ArgumentParserFixture { Log = new FakeLog() };
+                var parser = new ArgumentParser(fixture.Log, fixture.VerbosityParser);
+                var arguments = new[] { "build1.config", "build2.config" };
+
+                // When
+                CakeOptions options = parser.Parse(arguments);
+
+                // Then
+                AssertDefaultOptions(options);
+            }
+
+            private void AssertDefaultOptions(CakeOptions options)
+            {
+                Assert.Equal(Verbosity.Normal, options.Verbosity);
+            }
+
             [Theory]
             [InlineData("/home/test/build.cake")]
             [InlineData("\"/home/test/build.cake\"")]
@@ -69,10 +89,10 @@ namespace Cake.Tests.Unit.Arguments
                 // Given
                 var fixture = new ArgumentParserFixture();
                 var parser = new ArgumentParser(fixture.Log, fixture.VerbosityParser);
-                var arguments = input.Split(new[] { ' ' }, StringSplitOptions.None);
+                var arguments = new[] { input };
 
                 // When
-                var result = parser.Parse(arguments);
+                CakeOptions result = parser.Parse(arguments);
 
                 // Then
                 Assert.NotNull(result);
@@ -89,16 +109,36 @@ namespace Cake.Tests.Unit.Arguments
                 var fixture = new ArgumentParserFixture();
                 var parser = new ArgumentParser(fixture.Log, fixture.VerbosityParser);
                 var file = Substitute.For<IFile>();
-                file.Exists.Returns(true);
+                file.Exists.Returns(false);
+                file.Path.Returns("foo.cake");
 
                 fixture.FileSystem.GetFile(Arg.Is<FilePath>(fp => fp.FullPath == scriptName))
                     .Returns(file);
 
                 // When
-                var result = parser.Parse(new string[] { });
+                CakeOptions result = parser.Parse(new string[] { });
 
                 // Then
                 Assert.NotNull(result.Script);
+            }
+
+            [Fact]
+            public void Can_Find_BuildCake_Script_First()
+            {
+                // Given
+                var fixture = new ArgumentParserFixture();
+                var parser = new ArgumentParser(fixture.Log, fixture.VerbosityParser);
+                var file = Substitute.For<IFile>();
+                file.Exists.Returns(true);
+
+                fixture.FileSystem.GetFile(Arg.Any<FilePath>())
+                    .Returns(file);
+
+                // When
+                CakeOptions result = parser.Parse(new string[] { });
+
+                // Then
+                Assert.Equal("build.cake", result.Script.FullPath);
             }
 
             public sealed class WithSingleDashLongArguments
