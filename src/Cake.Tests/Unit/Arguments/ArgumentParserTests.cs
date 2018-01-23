@@ -109,17 +109,17 @@ namespace Cake.Tests.Unit.Arguments
                 var fixture = new ArgumentParserFixture();
                 var parser = new ArgumentParser(fixture.Log, fixture.VerbosityParser);
                 var file = Substitute.For<IFile>();
-                file.Exists.Returns(false);
-                file.Path.Returns("foo.cake");
+                file.Exists.Returns(true);
 
                 fixture.FileSystem.GetFile(Arg.Is<FilePath>(fp => fp.FullPath == scriptName))
                     .Returns(file);
 
                 // When
-                CakeOptions result = parser.Parse(new string[] { });
+                var result = parser.Parse(new string[] { });
 
                 // Then
                 Assert.NotNull(result.Script);
+
             }
 
             [Fact]
