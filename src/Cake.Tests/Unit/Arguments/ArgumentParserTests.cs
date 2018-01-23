@@ -116,25 +116,6 @@ namespace Cake.Tests.Unit.Arguments
                 Assert.Equal("build.cake", result.Script.FullPath);
             }
 
-            [Fact]
-            public void Can_Find_BuildCake_Script_First()
-            {
-                // Given
-                var fixture = new ArgumentParserFixture();
-                var parser = new ArgumentParser(fixture.Log, fixture.VerbosityParser);
-                var file = Substitute.For<IFile>();
-                file.Exists.Returns(true);
-
-                fixture.FileSystem.GetFile(Arg.Any<FilePath>())
-                    .Returns(file);
-
-                // When
-                CakeOptions result = parser.Parse(new string[] { });
-
-                // Then
-                Assert.Equal("build.cake", result.Script.FullPath);
-            }
-
             public sealed class WithSingleDashLongArguments
             {
                 [Fact]
