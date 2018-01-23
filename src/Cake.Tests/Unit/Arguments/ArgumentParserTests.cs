@@ -10,8 +10,6 @@ using Cake.Core.IO;
 using Cake.Testing;
 using Cake.Tests.Fixtures;
 
-using NSubstitute;
-
 using Xunit;
 
 namespace Cake.Tests.Unit.Arguments
