@@ -13,6 +13,8 @@ namespace Cake.Arguments
 {
     internal sealed class ArgumentParser : IArgumentParser
     {
+        private const string DefaultScriptFileName = "build.cake";
+
         private readonly ICakeLog _log;
         private readonly VerbosityParser _verbosityParser;
 
@@ -36,7 +38,7 @@ namespace Cake.Arguments
             if (arguments.Count == 0)
             {
                 // If we don't have any arguments, set a default script.
-                options.Script = "./build.cake";
+                options.Script = $"./{DefaultScriptFileName}";
             }
 
             foreach (var arg in arguments)
@@ -74,7 +76,7 @@ namespace Cake.Arguments
                                 return options;
                             }
 
-                            options.Script = "./build.cake";
+                            options.Script = $"./{DefaultScriptFileName}";
                             continue;
                         }
 
