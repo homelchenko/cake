@@ -131,23 +131,6 @@ namespace Cake.Tests.Unit.Arguments
                 }
 
                 [Fact]
-                public void Should_Add_Unknown_Arguments_To_Argument_List_Without_Script()
-                {
-                    // Given
-                    var environment = FakeEnvironment.CreateUnixEnvironment();
-                    var fakeFileSystem = new FakeFileSystem(environment);
-                    fakeFileSystem.CreateFile(new FilePath("build.cake"));
-                    var fixture = new ArgumentParserFixture { FileSystem = fakeFileSystem };
-                    var parser = new ArgumentParser(fixture.Log, fixture.VerbosityParser);
-
-                    // When
-                    CakeOptions result = parser.Parse(new[] { "-unknown" });
-
-                    // Then
-                    Assert.True(result.Arguments.ContainsKey("unknown"));
-                }
-
-                [Fact]
                 public void Should_Return_Error_If_Multiple_Arguments_With_The_Same_Name_Exist()
                 {
                     // Given
