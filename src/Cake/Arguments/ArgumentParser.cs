@@ -15,6 +15,8 @@ namespace Cake.Arguments
     {
         private const string DefaultScriptFileName = "build.cake";
 
+        private readonly string _defaultScriptFilePath;
+
         private readonly ICakeLog _log;
         private readonly VerbosityParser _verbosityParser;
 
@@ -22,6 +24,8 @@ namespace Cake.Arguments
         {
             _log = log;
             _verbosityParser = parser;
+
+            this._defaultScriptFilePath = $"./{DefaultScriptFileName}";
         }
 
         public CakeOptions Parse(IEnumerable<string> args)
@@ -38,7 +42,7 @@ namespace Cake.Arguments
             if (arguments.Count == 0)
             {
                 // If we don't have any arguments, set a default script.
-                options.Script = $"./{DefaultScriptFileName}";
+                options.Script = _defaultScriptFilePath;
             }
 
             foreach (var arg in arguments)
@@ -76,7 +80,7 @@ namespace Cake.Arguments
                                 return options;
                             }
 
-                            options.Script = $"./{DefaultScriptFileName}";
+                            options.Script = _defaultScriptFilePath;
                             continue;
                         }
 
