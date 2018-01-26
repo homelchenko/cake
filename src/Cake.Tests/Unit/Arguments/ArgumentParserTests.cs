@@ -124,7 +124,7 @@ namespace Cake.Tests.Unit.Arguments
                     var parser = new ArgumentParser(fixture.Log, fixture.VerbosityParser);
 
                     // When
-                    var result = parser.Parse(new[] { "build.cake", "-unknown" });
+                    CakeOptions result = parser.Parse(new[] { "build.cake", "-unknown" });
 
                     // Then
                     Assert.True(result.Arguments.ContainsKey("unknown"));
@@ -141,7 +141,7 @@ namespace Cake.Tests.Unit.Arguments
                     var parser = new ArgumentParser(fixture.Log, fixture.VerbosityParser);
 
                     // When
-                    var result = parser.Parse(new[] { "-unknown" });
+                    CakeOptions result = parser.Parse(new[] { "-unknown" });
 
                     // Then
                     Assert.True(result.Arguments.ContainsKey("unknown"));
