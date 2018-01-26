@@ -37,10 +37,11 @@ namespace Cake.Arguments
             var isParsingOptions = false;
 
             var arguments = args.ToList();
-            if (arguments.Count == 0)
+            if (NoUserArguments(arguments))
             {
-                // If we don't have any arguments, set a default script.
-                options.Script = _defaultScriptFilePath;
+                SetDefaultOptions(options);
+
+                return options;
             }
 
             foreach (var arg in arguments)
@@ -94,6 +95,22 @@ namespace Cake.Arguments
             }
 
             return options;
+        }
+
+
+        private static bool NoUserArguments(IList<string> arguments)
+        {
+            return arguments.Count == 0;
+        }
+
+        private void SetDefaultOptions(CakeOptions options)
+        {
+            SetDefaultScript(options);
+        }
+
+        private void SetDefaultScript(CakeOptions options)
+        {
+            options.Script = _defaultScriptFilePath;
         }
 
         private static bool IsOption(string arg)
