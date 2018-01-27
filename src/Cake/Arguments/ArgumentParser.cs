@@ -119,12 +119,17 @@ namespace Cake.Arguments
 
         private bool IsOption(string argument)
         {
-            if (string.IsNullOrWhiteSpace(argument))
+            if (IsEmptyArgument(argument))
             {
                 return false;
             }
 
             return IsSingleDashArgument(argument) || IsDoubleDashArgument(argument);
+        }
+
+        private bool IsEmptyArgument(string argument)
+        {
+            return string.IsNullOrWhiteSpace(argument);
         }
 
         private bool IsSingleDashArgument(string argument)
