@@ -97,7 +97,6 @@ namespace Cake.Arguments
             return options;
         }
 
-
         private static bool NoUserArguments(IList<string> arguments)
         {
             return arguments.Count == 0;
