@@ -187,7 +187,7 @@ namespace Cake.Arguments
 
             if (IsShowHelpOption(name))
             {
-                options.ShowHelp = ParseBooleanValue(value);
+                options.ShowHelp = ParseShowHelpOptionValue(value);
             }
 
             if (name.Equals("version", StringComparison.OrdinalIgnoreCase) ||
@@ -295,6 +295,11 @@ namespace Cake.Arguments
         private bool IsHelpOption(string name)
         {
             return name.Equals("help", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private bool ParseShowHelpOptionValue(string value)
+        {
+            return ParseBooleanValue(value);
         }
 
         private static bool ParseBooleanValue(string value)
