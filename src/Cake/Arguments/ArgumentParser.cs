@@ -218,7 +218,8 @@ namespace Cake.Arguments
                 return false;
             }
 
-            options.Arguments.Add(name, value);
+            AddUnknownArgument(name, value, options);
+
             return true;
         }
 
@@ -318,6 +319,11 @@ namespace Cake.Arguments
                 return false;
             }
             throw new InvalidOperationException("Argument value is not a valid boolean value.");
+        }
+
+        private void AddUnknownArgument(string name, string value, CakeOptions options)
+        {
+            options.Arguments.Add(name, value);
         }
     }
 }
