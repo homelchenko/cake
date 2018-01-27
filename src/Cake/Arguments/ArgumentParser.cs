@@ -180,9 +180,7 @@ namespace Cake.Arguments
                 options.ShowDescription = ParseShowDescriptionOption(value);
             }
 
-            if (name.Equals("dryrun", StringComparison.OrdinalIgnoreCase) ||
-                name.Equals("noop", StringComparison.OrdinalIgnoreCase) ||
-                name.Equals("whatif", StringComparison.OrdinalIgnoreCase))
+            if (IsPerformDryRunOption(name))
             {
                 options.PerformDryRun = ParseBooleanValue(value);
             }
@@ -223,6 +221,26 @@ namespace Cake.Arguments
 
             options.Arguments.Add(name, value);
             return true;
+        }
+
+        private bool IsPerformDryRunOption(string name)
+        {
+            return IsDryRunOption(name) || IsNoopOption(name) || IsWhatIfOption(name);
+        }
+
+        private bool IsDryRunOption(string name)
+        {
+            return name.Equals("dryrun", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private bool IsNoopOption(string name)
+        {
+            return name.Equals("noop", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private bool IsWhatIfOption(string name)
+        {
+            return name.Equals("whatif", StringComparison.OrdinalIgnoreCase);
         }
 
         private bool IsVerbosityOption(string name)
