@@ -177,7 +177,7 @@ namespace Cake.Arguments
 
             if (IsShowDescriptionOption(name))
             {
-                options.ShowDescription = ParseShowDescriptionOption(value);
+                options.ShowDescription = ParseShowDescriptionOptionValue(value);
             }
 
             if (IsPerformDryRunOption(name))
@@ -253,7 +253,7 @@ namespace Cake.Arguments
             return name.Equals("showdescription", StringComparison.OrdinalIgnoreCase);
         }
 
-        private bool ParseShowDescriptionOption(string value)
+        private bool ParseShowDescriptionOptionValue(string value)
         {
             return ParseBooleanValue(value);
         }
