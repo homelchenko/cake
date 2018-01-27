@@ -40,9 +40,9 @@ namespace Cake.Arguments
                 return BuildDefaultOptions();
             }
 
-            foreach (var arg in arguments)
+            foreach (var argument in arguments)
             {
-                var value = arg.UnQuote();
+                var value = argument.UnQuote();
 
                 if (isParsingOptions)
                 {
@@ -66,7 +66,7 @@ namespace Cake.Arguments
                     try
                     {
                         // If they didn't provide a specific build script, search for a default.
-                        if (IsOption(arg))
+                        if (IsOption(argument))
                         {
                             // Make sure we parse the option
                             if (!ParseOption(value, options))
