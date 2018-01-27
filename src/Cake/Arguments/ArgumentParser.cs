@@ -142,21 +142,21 @@ namespace Cake.Arguments
             return argument.StartsWith("--");
         }
 
-        private bool ParseOption(string arg, CakeOptions options)
+        private bool ParseOption(string argument, CakeOptions options)
         {
             string name, value;
 
-            var nameIndex = arg.StartsWith("--") ? 2 : 1;
-            var separatorIndex = arg.IndexOfAny(new[] { '=' });
+            var nameIndex = argument.StartsWith("--") ? 2 : 1;
+            var separatorIndex = argument.IndexOfAny(new[] { '=' });
             if (separatorIndex < 0)
             {
-                name = arg.Substring(nameIndex);
+                name = argument.Substring(nameIndex);
                 value = string.Empty;
             }
             else
             {
-                name = arg.Substring(nameIndex, separatorIndex - nameIndex);
-                value = arg.Substring(separatorIndex + 1);
+                name = argument.Substring(nameIndex, separatorIndex - nameIndex);
+                value = argument.Substring(separatorIndex + 1);
             }
 
             return ParseOption(name, value.UnQuote(), options);
