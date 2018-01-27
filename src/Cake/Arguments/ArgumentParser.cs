@@ -164,8 +164,7 @@ namespace Cake.Arguments
 
         private bool ParseOption(string name, string value, CakeOptions options)
         {
-            if (name.Equals("verbosity", StringComparison.OrdinalIgnoreCase)
-                || name.Equals("v", StringComparison.OrdinalIgnoreCase))
+            if (IsVerbosityOption(name))
             {
                 Verbosity verbosity;
                 if (!_verbosityParser.TryParse(value, out verbosity))
@@ -225,6 +224,21 @@ namespace Cake.Arguments
 
             options.Arguments.Add(name, value);
             return true;
+        }
+
+        private bool IsVerbosityOption(string name)
+        {
+            return IsShortVerbosityOption(name) || IsLongVerbosityOption(name);
+        }
+
+        private bool IsShortVerbosityOption(string name)
+        {
+            return name.Equals("v", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private bool IsLongVerbosityOption(string name)
+        {
+            return name.Equals("verbosity", StringComparison.OrdinalIgnoreCase);
         }
 
         private static bool ParseBooleanValue(string value)
