@@ -175,8 +175,7 @@ namespace Cake.Arguments
                 options.Verbosity = verbosity;
             }
 
-            if (name.Equals("showdescription", StringComparison.OrdinalIgnoreCase) ||
-                name.Equals("s", StringComparison.OrdinalIgnoreCase))
+            if (IsShowDescriptionOption(name))
             {
                 options.ShowDescription = ParseBooleanValue(value);
             }
@@ -239,6 +238,21 @@ namespace Cake.Arguments
         private bool IsLongVerbosityOption(string name)
         {
             return name.Equals("verbosity", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private bool IsShowDescriptionOption(string name)
+        {
+            return IsShortShowDescriptionOption(name) || IsLongShowDescriptionOption(name);
+        }
+
+        private bool IsShortShowDescriptionOption(string name)
+        {
+            return name.Equals("s", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private bool IsLongShowDescriptionOption(string name)
+        {
+            return name.Equals("showdescription", StringComparison.OrdinalIgnoreCase);
         }
 
         private static bool ParseBooleanValue(string value)
