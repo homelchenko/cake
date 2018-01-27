@@ -182,7 +182,7 @@ namespace Cake.Arguments
 
             if (IsPerformDryRunOption(name))
             {
-                options.PerformDryRun = ParseBooleanValue(value);
+                options.PerformDryRun = ParsePerformDryRunOptionValue(value);
             }
 
             if (name.Equals("help", StringComparison.OrdinalIgnoreCase) ||
@@ -223,26 +223,6 @@ namespace Cake.Arguments
             return true;
         }
 
-        private bool IsPerformDryRunOption(string name)
-        {
-            return IsDryRunOption(name) || IsNoopOption(name) || IsWhatIfOption(name);
-        }
-
-        private bool IsDryRunOption(string name)
-        {
-            return name.Equals("dryrun", StringComparison.OrdinalIgnoreCase);
-        }
-
-        private bool IsNoopOption(string name)
-        {
-            return name.Equals("noop", StringComparison.OrdinalIgnoreCase);
-        }
-
-        private bool IsWhatIfOption(string name)
-        {
-            return name.Equals("whatif", StringComparison.OrdinalIgnoreCase);
-        }
-
         private bool IsVerbosityOption(string name)
         {
             return IsShortVerbosityOption(name) || IsLongVerbosityOption(name);
@@ -274,6 +254,31 @@ namespace Cake.Arguments
         }
 
         private bool ParseShowDescriptionOption(string value)
+        {
+            return ParseBooleanValue(value);
+        }
+
+        private bool IsPerformDryRunOption(string name)
+        {
+            return IsDryRunOption(name) || IsNoopOption(name) || IsWhatIfOption(name);
+        }
+
+        private bool IsDryRunOption(string name)
+        {
+            return name.Equals("dryrun", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private bool IsNoopOption(string name)
+        {
+            return name.Equals("noop", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private bool IsWhatIfOption(string name)
+        {
+            return name.Equals("whatif", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private bool ParsePerformDryRunOptionValue(string value)
         {
             return ParseBooleanValue(value);
         }
