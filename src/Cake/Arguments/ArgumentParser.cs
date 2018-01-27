@@ -37,9 +37,7 @@ namespace Cake.Arguments
             var arguments = args.ToList();
             if (NoUserArguments(arguments))
             {
-                SetDefaultOptions(options);
-
-                return options;
+                return BuildDefaultOptions();
             }
 
             foreach (var arg in arguments)
@@ -98,6 +96,15 @@ namespace Cake.Arguments
         private static bool NoUserArguments(IList<string> arguments)
         {
             return arguments.Count == 0;
+        }
+
+        private CakeOptions BuildDefaultOptions()
+        {
+            var options = new CakeOptions();
+
+            SetDefaultOptions(options);
+
+            return options;
         }
 
         private void SetDefaultOptions(CakeOptions options)
