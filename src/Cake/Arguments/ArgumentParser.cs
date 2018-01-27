@@ -177,7 +177,7 @@ namespace Cake.Arguments
 
             if (IsShowDescriptionOption(name))
             {
-                options.ShowDescription = ParseBooleanValue(value);
+                options.ShowDescription = ParseShowDescriptionOption(value);
             }
 
             if (name.Equals("dryrun", StringComparison.OrdinalIgnoreCase) ||
@@ -253,6 +253,11 @@ namespace Cake.Arguments
         private bool IsLongShowDescriptionOption(string name)
         {
             return name.Equals("showdescription", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private bool ParseShowDescriptionOption(string value)
+        {
+            return ParseBooleanValue(value);
         }
 
         private static bool ParseBooleanValue(string value)
