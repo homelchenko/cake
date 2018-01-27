@@ -218,7 +218,7 @@ namespace Cake.Arguments
                 return false;
             }
 
-            AddUnknownArgument(name, value, options);
+            AddOptionToArgumentList(name, value, options);
 
             return true;
         }
@@ -321,7 +321,7 @@ namespace Cake.Arguments
             throw new InvalidOperationException("Argument value is not a valid boolean value.");
         }
 
-        private void AddUnknownArgument(string name, string value, CakeOptions options)
+        private void AddOptionToArgumentList(string name, string value, CakeOptions options)
         {
             options.Arguments.Add(name, value);
         }
