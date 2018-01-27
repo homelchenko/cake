@@ -117,14 +117,24 @@ namespace Cake.Arguments
             options.Script = DefaultScriptFilePath;
         }
 
-        private static bool IsOption(string argument)
+        private bool IsOption(string argument)
         {
             if (string.IsNullOrWhiteSpace(argument))
             {
                 return false;
             }
 
-            return argument.StartsWith("--") || argument.StartsWith("-");
+            return IsSingleDashArgument(argument) || IsDoubleDashArgument(argument);
+        }
+
+        private bool IsSingleDashArgument(string argument)
+        {
+            return argument.StartsWith("-");
+        }
+
+        private bool IsDoubleDashArgument(string argument)
+        {
+            return argument.StartsWith("--");
         }
 
         private bool ParseOption(string arg, CakeOptions options)
