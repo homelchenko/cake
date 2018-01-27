@@ -185,8 +185,7 @@ namespace Cake.Arguments
                 options.PerformDryRun = ParsePerformDryRunOptionValue(value);
             }
 
-            if (name.Equals("help", StringComparison.OrdinalIgnoreCase) ||
-                name.Equals("?", StringComparison.OrdinalIgnoreCase))
+            if (IsShowHelpOption(name))
             {
                 options.ShowHelp = ParseBooleanValue(value);
             }
@@ -281,6 +280,21 @@ namespace Cake.Arguments
         private bool ParsePerformDryRunOptionValue(string value)
         {
             return ParseBooleanValue(value);
+        }
+
+        private bool IsShowHelpOption(string name)
+        {
+            return IsHelpOption(name) || IsQuestionMarkOption(name);
+        }
+
+        private bool IsQuestionMarkOption(string name)
+        {
+            return name.Equals("?", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private bool IsHelpOption(string name)
+        {
+            return name.Equals("help", StringComparison.OrdinalIgnoreCase);
         }
 
         private static bool ParseBooleanValue(string value)
