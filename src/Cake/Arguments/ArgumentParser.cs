@@ -13,7 +13,7 @@ namespace Cake.Arguments
 {
     internal sealed class ArgumentParser : IArgumentParser
     {
-        private readonly string _defaultScriptFilePath;
+        private const string DefaultScriptFilePath = "./build.cake";
 
         private readonly ICakeLog _log;
         private readonly VerbosityParser _verbosityParser;
@@ -22,8 +22,6 @@ namespace Cake.Arguments
         {
             _log = log;
             _verbosityParser = parser;
-
-            _defaultScriptFilePath = "./build.cake";
         }
 
         public CakeOptions Parse(IEnumerable<string> args)
@@ -79,7 +77,7 @@ namespace Cake.Arguments
                                 return options;
                             }
 
-                            options.Script = _defaultScriptFilePath;
+                            options.Script = DefaultScriptFilePath;
                             continue;
                         }
 
@@ -109,7 +107,7 @@ namespace Cake.Arguments
 
         private void SetDefaultScript(CakeOptions options)
         {
-            options.Script = _defaultScriptFilePath;
+            options.Script = DefaultScriptFilePath;
         }
 
         private static bool IsOption(string arg)
